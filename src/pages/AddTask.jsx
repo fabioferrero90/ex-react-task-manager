@@ -16,8 +16,8 @@ const AddTask = () => {
       setErrMess('Il nome del task non può contenere caratteri speciali');    
     } else {
       setErrMess('');
-      setTitle(title);
     }
+    setTitle(title);
   }
 
   const submitTask = (e) => {
@@ -38,49 +38,51 @@ const AddTask = () => {
   }
 
   return (
-    <div className="w-screen-xl py-5">
-      <h1 className="font-bold text-2xl py-3 text-center">Aggiungi Task</h1>
-      <form onSubmit={submitTask} className="w-full flex flex-col items-center">
+    <div className="flex justify-center">
+      <div className="md:w-[800px] sm:w-[500px] max-w-[95%] py-5">
+      <h1 className="page-title">Aggiungi Task</h1>
+        <form onSubmit={submitTask} className="p-5 flex flex-col items-center border-2 rounded-xl">
 
-        <label className="w-[400px] max-w-[80%] py-2 flex flex-col"htmlFor="taskName">
-          <span className="text-sm text-gray-700 font-bold"> Nome del task </span>
-          <input
-            type="text"
-            id="taskName"
-            value={title}
-            onChange={(e) => validateTitle(e.target.value)}
-            placeholder="Inserisci il nome del task"
-            className="p-2 mt-0.5 border-1 rounded border-gray-400 shadow-sm"
-          />
-          {errMess && <span className="text-red-500 text-sm">{errMess}</span>}
-        </label>
+          <label className="w-[400px] max-w-[80%] py-2 flex flex-col"htmlFor="taskName">
+            <span className="text-sm text-gray-700 font-bold"> Nome del task </span>
+            <input
+              type="text"
+              id="taskName"
+              value={title}
+              onChange={(e) => validateTitle(e.target.value)}
+              placeholder="Inserisci il nome del task"
+              className="p-2 mt-0.5 border-1 rounded border-gray-400 shadow-sm"
+            />
+            {errMess && <span className="text-red-500 text-sm">{errMess}</span>}
+          </label>
 
-        <label className="w-[400px] max-w-[80%] py-2 flex flex-col"htmlFor="description">
-          <span className="text-sm text-gray-700 font-bold"> Descrizione del task </span>
-          <textarea
-            id="description"
-            ref={descriptionRef}
-            placeholder="Inserisci la descrizione del task"
-            className="p-2 mt-0.5 border-1 rounded border-gray-400 shadow-sm"
-          />
-        </label>
+          <label className="w-[400px] max-w-[80%] py-2 flex flex-col"htmlFor="description">
+            <span className="text-sm text-gray-700 font-bold"> Descrizione del task </span>
+            <textarea
+              id="description"
+              ref={descriptionRef}
+              placeholder="Inserisci la descrizione del task"
+              className="p-2 mt-0.5 border-1 rounded border-gray-400 shadow-sm"
+            />
+          </label>
 
-        <label className="w-[400px] max-w-[80%] py-2 flex flex-col"htmlFor="status">
-          <span className="text-sm text-gray-700 font-bold"> Stato della Task </span>
-          <select
-            id="status"
-            ref={statusRef}
-            placeholder="Inserisci la descrizione del task"
-            className="p-2 mt-0.5 border-1 rounded border-gray-400 shadow-sm"
-          >
-            <option value="To do">To do</option>
-            <option value="Doing">Doing</option>
-            <option value="Done">Done</option>
-          </select>
-        </label>
+          <label className="w-[400px] max-w-[80%] py-2 flex flex-col"htmlFor="status">
+            <span className="text-sm text-gray-700 font-bold"> Stato della Task </span>
+            <select
+              id="status"
+              ref={statusRef}
+              placeholder="Inserisci la descrizione del task"
+              className="p-2 mt-0.5 border-1 rounded border-gray-400 shadow-sm"
+            >
+              <option value="To do">To do</option>
+              <option value="Doing">Doing</option>
+              <option value="Done">Done</option>
+            </select>
+          </label>
 
-        <button className="w-[400px] max-w-[80%] bg-gray-300 p-2 mt-5 border-0 rounded-2xl text-sm font-bold cursor-pointer" type="submit">Aggiungi Task</button>
-      </form>
+          <button className="w-[400px] max-w-[80%] bg-blue-300 p-2 mt-5 border-0 rounded-2xl text-sm font-bold cursor-pointer" type="submit">Aggiungi Task</button>
+        </form>
+      </div>
     </div>
   )
 }

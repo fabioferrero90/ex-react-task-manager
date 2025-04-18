@@ -5,9 +5,14 @@
   height:35px;
 }
 
-.custom-table {
-  border-collapse: separate;
-  border-spacing: 0;
-  border-radius: 0.75rem;
-  overflow: hidden;
+.page-title{
+  font-size:1.5rem;
+  font-weight:bold;
+  text-align: center;
+  margin-bottom:2rem;
+  margin-top: 1rem;
+  background-color: rgb(234, 241, 245);
+  padding:0.5rem;
+  border-radius:1rem;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
