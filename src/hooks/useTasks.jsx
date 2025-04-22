@@ -1,17 +1,20 @@
-import { useState } from 'react'
+import { useReducer } from 'react'
+import taskReducer from '../reducer/taskReducer'
 
 export default function useTasks() {
-  const apiBaseUrl = import.meta.env.VITE_API_BASEURL
-
-  const [tasks, setTasks] = useState([])
+  const apiBaseUrl = import.meta.env.VITE_API_BASEURL;
+  const [tasks, dispatchTasks] = useReducer(taskReducer, [])
 
   const fetchTasks = async () => {
     try{
         const res = await fetch(`${apiBaseUrl}/tasks`)
         const data = await res.json()
-        setTasks(data)
+        dispatchTasks({
+            type: "LOAD_TASKS",
+            payload: data
+        })
     }catch(err){
-        console.log(err)
+        console.error(err)
     }
   }
 
@@ -30,13 +33,15 @@ export default function useTasks() {
             body: JSON.stringify(task)
         })
         const data = await res.json()
-        if (data.success) {
-          fetchTasks();
-          alert("Task aggiunta con successo!")
-          window.location.replace('/');
-        } else {
-          throw new Error(data.message);
+        if (!data.success) {
+          throw new Error(data.message); 
         }
+        dispatchTasks({
+            type: "ADD_TASK",
+            payload: task
+        })
+        alert("Task aggiunta con successo!")
+        window.location.replace('/');
     } catch(err){
         alert(err.message)
     }
@@ -49,13 +54,15 @@ export default function useTasks() {
           method: 'DELETE',
       })
       const data = await res.json()
-      if (data.success) {
-        fetchTasks();
-        alert("Task Eliminata con successo!")
-        window.location.replace('/');
-      } else {
-        throw new Error(data.message);
+      if (!data.success) {
+        throw new Error(data.message); 
       }
+      dispatchTasks({
+          type: "REMOVE_TASK",
+          payload: taskId
+      })
+      alert("Task Eliminata con successo!")
+      window.location.replace('/');
     } catch(err){
         alert(err.message)
     }
@@ -77,12 +84,14 @@ export default function useTasks() {
         body: JSON.stringify(task)
       })
       const data = await res.json()
-      if (data.success) {
-        fetchTasks();
-        alert("Task modificata con successo!")
-      } else {
+      if (!data.success) {
         throw new Error(data.message);
       }
+      dispatchTasks({
+        type: "UPDATE_TASK",
+        payload: task
+      })
+      alert("Task modificata con successo!")
       } catch(err){
           alert(err.message)
       }
@@ -108,14 +117,16 @@ export default function useTasks() {
           rejectedDeletions.push(taskId);
         }
       });
-
-      if (!rejectedDeletions) {
-        fetchTasks();
-        alert("Task eliminati con successo!");
-        window.location.replace('/');
-      } else {
+      if (rejectedDeletions.length > 0) {
         throw new Error(`Errore durante l'eliminazione dei seguenti task ID: ${rejectedDeletions.join(", ")}`);
       }
+      dispatchTasks({
+        type: "REMOVE_MULTIPLE_TASKS",
+        payload: fulfilledDeletions 
+      })
+      alert("Task eliminati con successo!");
+      window.location.replace('/');
+      
     } catch(err){
         alert(err.message)
         window.location.replace('/');
