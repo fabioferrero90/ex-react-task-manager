@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { GlobalProvider, useGlobalContext } from './contexts/GlobalContext'
+import { GlobalProvider } from './contexts/GlobalContext'
 import DefaultLayout from './layouts/DefaultLayout'
 import TaskList from './pages/TaskList'
 import AddTask from './pages/AddTask'
