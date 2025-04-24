@@ -1,4 +1,4 @@
-import { useReducer } from 'react'
+import { useReducer, useEffect } from 'react'
 import taskReducer from '../reducer/taskReducer'
 
 export default function useTasks() {
@@ -17,6 +17,10 @@ export default function useTasks() {
         console.error(err)
     }
   }
+
+  useEffect(() => {
+    fetchTasks()
+  }, [])
 
   const addTask = async (task) => {
     const taskExists = tasks.some(t => t.title === task.title);
@@ -133,6 +137,5 @@ export default function useTasks() {
     }
   }
 
-  fetchTasks()
   return [ tasks, addTask, removeTask, updateTask, removeMultipleTasks ]
 }
